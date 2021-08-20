@@ -34,8 +34,8 @@ export  const getAllGeneresApi=()=>{
     const url = `${API_HOST}/genre/movie/list?api_key=${API_KEY}&lenguage=${LANG}`
     
     return fetch(url)
-      .then((res)=>{
-          return res.json()
+      .then((response)=>{
+          return response.json()
       })
       .then((result)=>{
           return result;

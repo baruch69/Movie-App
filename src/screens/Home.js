@@ -8,7 +8,9 @@ export default function Home() {
 
 
 const [newMovies, setNewMovies] = useState(null);
-const [genresList, setGenresList] = useState(null)
+const [genresList, setGenresList] = useState([]);
+
+const [genreSelected, setGenreSelected] = useState(28)
 
 useEffect(() => {
     getNewsMoviesApi().then((response)=>{
@@ -17,10 +19,15 @@ useEffect(() => {
 }, [])  
 
 useEffect(() => {
-  getAllGeneresApi().then((results)=>{
-      setGenresList(response)
+  getAllGeneresApi().then((response)=>{
+      setGenresList(response.genres )
   })
 }, [])
+
+
+const onChangeGenre=(newGenreId)=>{
+    setGenreSelected(newGenreId)
+}
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -32,13 +39,22 @@ useEffect(() => {
                 </View>
             )}
             <View style={styles.genres}> 
-                <Title style={styles.genresTitle}> Peliculas por generos</Title>
-               {genresList && (
-                   <View>
-
-                  </View>  
-
-               )}
+                <Title style={styles.genresTitle} > Peliculas por generos</Title>
+              
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.genreList}
+                >
+                     {genresList.map((gen)=>{
+                         return(
+                             <Text 
+                               key={gen.id}
+                               onPress={()=> onChangeGenre(gen.id)}
+                               style={[styles.title, {color: gen.id != genreSelected ? "#8697a5": "#fff"}]} >{gen.name}</Text>
+                         )
+                     })}
+                </ScrollView>
            
             </View>
         </ScrollView>
@@ -62,5 +78,14 @@ const styles = StyleSheet.create({
     genresTitle:{
        fontSize:20,
        fontWeight:"bold"
+    },
+    genreList:{
+        marginBottom:15,
+        marginTop:5,
+        padding:10
+    },
+    title:{
+        marginRight:5,
+        fontSize:16
     }
 })
