@@ -42,3 +42,15 @@ export  const getAllGeneresApi=()=>{
       })
 
 }
+
+
+export const  getGenreMovieApi=(idGenres)=>{
+    const url = `${API_HOST}/discover/movie?api_key=${API_KEY}&with_genres=${idGenres}&lenguage=${LANG}`
+    return fetch(url)
+    .then((response)=>{ 
+        return response.json()
+    })
+    .then((result)=>{
+        return result;
+    })
+}

@@ -1,8 +1,9 @@
 import React,{useState, useEffect} from 'react'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import {getNewsMoviesApi, getAllGeneresApi} from '../api/movies'
-import CarouselVertical from '../components/CarouselVertical'
-import { Title} from 'react-native-paper'
+import {getNewsMoviesApi, getAllGeneresApi, getGenreMovieApi} from '../api/movies'
+import CarouselVertical from '../components/CarouselVertical';
+import { Title} from 'react-native-paper';
+import CarouselMulti from '../components/CarouselMulti';
 
 export default function Home() {
 
@@ -11,6 +12,10 @@ const [newMovies, setNewMovies] = useState(null);
 const [genresList, setGenresList] = useState([]);
 
 const [genreSelected, setGenreSelected] = useState(28)
+
+const [genreMovie, setGenreMovie] = useState(null)
+
+
 
 useEffect(() => {
     getNewsMoviesApi().then((response)=>{
@@ -23,6 +28,12 @@ useEffect(() => {
       setGenresList(response.genres )
   })
 }, [])
+
+useEffect(() => {
+    getGenreMovieApi(genreSelected).then((response)=>{
+      setGenreMovie(response.results)
+    })
+}, [genreSelected])
 
 
 const onChangeGenre=(newGenreId)=>{
@@ -54,9 +65,13 @@ const onChangeGenre=(newGenreId)=>{
                                style={[styles.title, {color: gen.id != genreSelected ? "#8697a5": "#fff"}]} >{gen.name}</Text>
                          )
                      })}
+                      
                 </ScrollView>
-           
+                {genreMovie &&(
+                    <CarouselMulti  data={genreMovie}/>
+                     )}
             </View>
+            
         </ScrollView>
     )
 }
@@ -86,6 +101,7 @@ const styles = StyleSheet.create({
     },
     title:{
         marginRight:5,
-        fontSize:16
+        fontSize:16,
+        marginHorizontal:10
     }
 })
