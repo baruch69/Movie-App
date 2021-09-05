@@ -2,11 +2,14 @@ import React, {useState, useEffect} from 'react'
 import { View, Text , StyleSheet, Image, ScrollView} from 'react-native';
 import {getMovieById} from '../api/movies';
 import {BASE_PATH_IMG} from '../utils/constans';
+import ModalVideo from '../components/ModalVideo';
 
 export default function Movie({route}) {
     const {id} = route.params;
 
     const [movie, setMovie] = useState(null)
+
+    const [showVideo, setShowVideo] = useState(false)
 
    // alert(movie.poster_path)
     
@@ -16,12 +19,15 @@ export default function Movie({route}) {
         console.log(response.poster_path);
        })
     }, [])
+
+    if(!movie) return null
    
     return (
         <>
          <ScrollView>
            <MovieImage  posterPath={movie && movie.poster_path}/>
-        </ScrollView>
+         </ScrollView>
+         <ModalVideo show={showVideo} setShow={setShowVideo} />
         </>
     )
 }
