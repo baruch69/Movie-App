@@ -1,11 +1,29 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React , {useState, useEffect} from 'react'
+import { View , ScrollView, Image, StyleSheet, TouchableWithoutFeedback} from 'react-native'
+import {Text, Title} from 'react-native-paper';
+import {getNewsMoviesApi} from '../api/movies';
 
-export default function News() {
+
+export default function News(props) {
     return (
-        <View>
-            <Text></Text>
-        </View>
+       <ScrollView>
+
+       </ScrollView>
     )
 }
+
+function Movie(){
+
+    return(
+       <TouchableWithoutFeedback>
+           <View>
+               
+           </View>
+       </TouchableWithoutFeedback>
+    )
+}
+
+const styles = StyleSheet.create({
+
+})
                                                                 

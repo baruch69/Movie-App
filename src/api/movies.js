@@ -80,3 +80,16 @@ export function getVideoMovieApi(idMovie){
        return result;
    })
 }
+
+export function getPopularMovieApi(page =1){
+    
+    const url = `${API_HOST}/movie/popular?api_key=${API_KEY}&lenguage=${LANG}&page=${page}`;
+    console.log(url);
+    return fetch(url)
+    .then((response)=>{ 
+        return response.json()
+    })
+    .then((result)=>{
+        return result;
+    })
+ }

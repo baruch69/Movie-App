@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import {  StyleSheet, Dimensions } from 'react-native';
+import {  StyleSheet, Dimensions, Platform } from 'react-native';
 import {Modal, IconButton} from 'react-native-paper';
 import YouTube from 'react-native-youtube';
+import {WebView} from 'react-native-webview'
 import {getVideoMovieApi} from '../api/movies';
 
 const {width} = Dimensions.get("window");
@@ -27,7 +28,12 @@ export default function ModalVideo({show, setShow, idMovie}) {
 
     return (
         <Modal style={styles.modal} visible={show}>
-           <YouTube videoId={video}  style={styles.video}/>
+          {Platform.OS === 'ios'?(
+               <YouTube videoId={video}  style={styles.video}/>
+          ):(
+               <WebView  style={{width:400, height:400}} 
+                source={{uri:`https://www.youtube.com/embed/${video}?controls=0&showinfo=0`}} />
+          )}
            <IconButton 
              icon="close"
              onPress={()=>setShow(false)}
@@ -46,7 +52,7 @@ const styles = StyleSheet.create({
   btnclose:{
       backgroundColor:"#fff",
       alignSelf:"center",
-      marginBottom:200
+      marginBottom:300
   },
   video:{
       alignSelf:"stretch",
