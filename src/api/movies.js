@@ -84,7 +84,7 @@ export function getVideoMovieApi(idMovie){
 export function getPopularMovieApi(page =1){
     
     const url = `${API_HOST}/movie/popular?api_key=${API_KEY}&lenguage=${LANG}&page=${page}`;
-    console.log(url);
+    
     return fetch(url)
     .then((response)=>{ 
         return response.json()
@@ -93,3 +93,14 @@ export function getPopularMovieApi(page =1){
         return result;
     })
  }
+
+ export function searchMovieApi(search){
+     const url = `${API_KEY}/search/movie?api_key=${API_KEY}&lenguages=${LANG}&query=${search}`
+     return fetch(url)
+     .then((response)=>{ 
+         return response.json()
+     })
+     .then((result)=>{
+         return result;
+     })
+}
